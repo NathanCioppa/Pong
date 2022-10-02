@@ -13,7 +13,20 @@
       text-align: center;
     }
     #canvas-container {
-      text-align: center;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .score {
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+      font-size: xx-large;
+      margin: 25px;
+      border: none;
+      outline: none;
+    }
+    #blue-score {
+        text-align: right;
     }
     canvas {
       border: 1px solid black;
@@ -22,7 +35,9 @@
   <body>
     <h1>Pong</h1>
     <div id="canvas-container">
+      <input class="score" id="blue-score" readonly></input>
       <canvas></canvas>
+      <input class="score" id="red-score" readonly></input>
     </div>
     <script src="index.js"></script>
   </body>

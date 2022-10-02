@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas')
 const rows = 50
-const cols = 50
+const cols = 40
 const blockSize = 10
 canvas.height = rows * blockSize
 canvas.width = cols * blockSize
@@ -47,17 +47,55 @@ addEventListener('keyup', (event) => {
     }
 })
 
+let ballX
+let ballY
 let r = blockSize / 2
-let ballX = ((cols * blockSize) / 2)
-let ballY = Math.floor(Math.random() * rows - 1) * blockSize - r
-let dBallX = 3
-let dBallY = 3
+let dBallX = 4
+let dBallY = 4
 
-if (Math.floor(Math.random() * 2) === 0) {
-    dBallX = -dBallX
+function placeBall() {
+    ballX = ((cols * blockSize) / 2)
+    ballY = Math.floor(Math.random() * (((rows - 2) - 2 + 1)) + 2) * blockSize
+    if (Math.floor(Math.random() * 2) === 0) {
+        dBallX = -dBallX
+    }
+}
+placeBall()
+
+let wait = false
+function nextRound() {
+    loseCondition = false
+    wait = false
+    dBallX = 4
+    dBallY = 4
+    if (Math.floor(Math.random() * 2) === 0) {
+        dBallX = -dBallX
+    }
 }
 
+let loseCondition = false
+let blueScore = 0
+let redScore = 0
+document.getElementById('red-score').value = redScore
+document.getElementById('blue-score').value = blueScore
+
 function getPongin() {
+    if (loseCondition === true && wait === false) {
+        wait = true
+        
+        if (ballX + r < 1 * blockSize) {
+            redScore += 1
+            document.getElementById('red-score').value = redScore
+        }
+        if (ballX + r > cols * blockSize) {
+            blueScore += 1
+            document.getElementById('blue-score').value = blueScore
+        }
+        placeBall()
+
+        setTimeout(nextRound, 1000)
+    }
+
     requestAnimationFrame(getPongin)
     c.clearRect(0, 0, cols * blockSize, rows * blockSize)
     c.beginPath()
@@ -99,10 +137,10 @@ function getPongin() {
     c.fill()
     c.stroke()
 
-    if (ballY + r > rows * blockSize || ballY + r < blockSize) {
+    if ((ballY + r > rows * blockSize && dBallY > 0) || (ballY + r < blockSize && dBallY < 0)) {
         dBallY = -dBallY
     }
-    if (ballX + r < 3 * blockSize && ballX + r > 2 * blockSize && dBallX < 0 && ballY + r > (bluePaddleY) * blockSize && ballY + r < (bluePaddleY + 4) * blockSize) {
+    if (ballX + r < 3 * blockSize && ballX + r > 2 * blockSize && dBallX < 0 && ballY + r >= (bluePaddleY) * blockSize && ballY + r <= (bluePaddleY + 5) * blockSize) {
         if (blueDown === true && dBallY <= 0) {
             if (dBallY === 0) {
                 dBallY += 3
@@ -129,7 +167,7 @@ function getPongin() {
         }
         dBallX = -dBallX
     }
-    if (ballX + r > (cols - 2) * blockSize && ballX + r < (cols - 1) * blockSize && dBallX > 0 && ballY + r > (redPaddleY) * blockSize && ballY + r < (redPaddleY + 4) * blockSize) {
+    if (ballX + r > (cols - 2) * blockSize && ballX + r < (cols - 1) * blockSize && dBallX > 0 && ballY + r >= (redPaddleY) * blockSize && ballY + r <= (redPaddleY + 5) * blockSize) {
         if (redDown === true && dBallY <= 0) {
             if (dBallY === 0) {
                 dBallY += 3
@@ -156,9 +194,10 @@ function getPongin() {
         }
         dBallX = -dBallX
     }
-    if (ballX + r < 1 * blockSize || ballX + r > cols * blockSize) {
-        dBallX += -dBallX
-        dBallY += -dBallY
+    if (ballX + r < -2 * blockSize || ballX + r > (cols + 3) * blockSize) {
+        dBallX = 0
+        dBallY = 0
+        loseCondition = true
     }
     
     ballX += dBallX
