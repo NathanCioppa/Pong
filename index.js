@@ -47,6 +47,33 @@ addEventListener('keyup', (event) => {
     }
 })
 
+let start = false
+let blueReady = false
+let redReady = false
+addEventListener('keydown', (event) => {
+    let keyName = event.key
+
+    if (keyName === 'd') {
+        blueReady = true
+    }
+    if (keyName === 'ArrowLeft') {
+        redReady = true
+    }
+    if (blueReady === true && redReady === true) {
+        start = true
+    }
+})
+addEventListener('keyup', (event) => {
+    let keyName = event.key
+
+    if (keyName === 'd') {
+        blueReady = false
+    }
+    if (keyName === 'ArrowLeft') {
+        redReady = false
+    }
+})
+
 let ballX
 let ballY
 let r = blockSize / 2
@@ -199,9 +226,10 @@ function getPongin() {
         dBallY = 0
         loseCondition = true
     }
-    
+
+    if (start === true) {
     ballX += dBallX
     ballY += dBallY
-    
+    }
 }
 getPongin()
