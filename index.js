@@ -106,7 +106,18 @@ let redScore = 0
 document.getElementById('red-score').value = redScore
 document.getElementById('blue-score').value = blueScore
 
+let winCondition = false
+
 function getPongin() {
+    
+    if (redScore > 20 && redScore > blueScore + 1) {
+        winCondition = true
+    }
+    if (blueScore > 20 && blueScore > redScore + 1) {
+        winCondition = true
+    }
+    if (winCondition === true) return
+
     if (loseCondition === true && wait === false) {
         wait = true
         
@@ -126,9 +137,14 @@ function getPongin() {
     requestAnimationFrame(getPongin)
     c.clearRect(0, 0, cols * blockSize, rows * blockSize)
     c.beginPath()
-    c.fillStyle='black'
-    c.fillRect(canvas.width / 2, 0, 1, rows * blockSize)
-    c.stroke
+    c.fillStyle='white'
+    for (let i = 0; i < rows * blockSize; i++) {
+        if (i % 20 === 0) {
+            c.fillRect(canvas.width / 2, i + 5, 1, blockSize)
+            c.stroke
+        }
+    }
+    
 
     if (blueUp === true && bluePaddleY > 0) {
         bluePaddleY += -1
@@ -159,7 +175,8 @@ function getPongin() {
     c.stroke()
 
     c.beginPath
-    c.fillStyle='black'
+    c.strokeStyle='white'
+    c.fillStyle='white'
     c.arc(ballX, ballY, r, Math.PI * 2, false)
     c.fill()
     c.stroke()

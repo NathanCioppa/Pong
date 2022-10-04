@@ -8,9 +8,11 @@
   </head>
   <style>
     body {
+        background-color: rgb(20, 20, 20);
     }
     h1 {
       text-align: center;
+      color: white;
     }
     #canvas-container {
       display: flex;
@@ -22,20 +24,33 @@
       margin: 25px;
       border: none;
       outline: none;
+      background-color: transparent;
+      color: white;
+      width: 5vw;
     }
     #blue-score {
         text-align: right;
     }
+    .info {
+        display: flex;
+        flex-direction: column;
+
+    }
     canvas {
-      border: 1px solid black;
+      border: 1px solid white;
+      background-color: rgb(15, 15, 15);
     }
   </style>
   <body>
     <h1>Pong</h1>
     <div id="canvas-container">
-      <input class="score" id="blue-score" readonly></input>
+        <div class="info">
+            <input class="score" id="blue-score" readonly></input>
+        </div>
       <canvas></canvas>
-      <input class="score" id="red-score" readonly></input>
+      <div class="info">      
+            <input class="score" id="red-score" readonly></input>
+        </div>
     </div>
     <script src="index.js"></script>
   </body>
