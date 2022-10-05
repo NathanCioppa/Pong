@@ -55,9 +55,13 @@ addEventListener('keydown', (event) => {
 
     if (keyName === 'd') {
         blueReady = true
+        document.getElementById('ready-blue').value='READY'
+        document.getElementById('ready-blue').style.color='rgb(0, 255, 0)'
     }
     if (keyName === 'ArrowLeft') {
         redReady = true
+        document.getElementById('ready-red').value='READY'
+        document.getElementById('ready-red').style.color='rgb(0, 255, 0)'
     }
     if (blueReady === true && redReady === true) {
         start = true
@@ -68,9 +72,16 @@ addEventListener('keyup', (event) => {
 
     if (keyName === 'd') {
         blueReady = false
+        document.getElementById('ready-blue').value='hold D when ready'
+        document.getElementById('ready-blue').style.color='white'
     }
     if (keyName === 'ArrowLeft') {
         redReady = false
+        document.getElementById('ready-red').value='hold LeftArrow when ready'
+        document.getElementById('ready-red').style.color='white'
+    }
+    if (winCondition === true && keyName === ' ') {
+        playAgain()
     }
 })
 
@@ -100,6 +111,28 @@ function nextRound() {
     }
 }
 
+function playAgain() {
+    start = false
+    loseCondition = false
+    document.getElementById('winner').style.display='none'
+    redScore = 0
+    blueScore = 0
+    document.getElementById('red-score').value = redScore
+    document.getElementById('blue-score').value = blueScore
+    bluePaddleY = 22
+    redPaddleY = 22
+    blueReady = false
+    redReady = false
+    winCondition = false
+    document.getElementById('ready-red').style.display=''
+    document.getElementById('ready-red').value='hold LeftArrow when ready'
+    document.getElementById('ready-red').style.color='white'
+    document.getElementById('ready-blue').style.display=''
+    document.getElementById('ready-blue').value='hold D when ready'
+    document.getElementById('ready-blue').style.color='white'
+    getPongin()
+}
+
 let loseCondition = false
 let blueScore = 0
 let redScore = 0
@@ -112,9 +145,15 @@ function getPongin() {
     
     if (redScore > 20 && redScore > blueScore + 1) {
         winCondition = true
+        document.getElementById('winner').style.display='flex'
+        document.getElementById('winner-message').style.color='red'
+        document.getElementById('winner-message').innerText='Red Wins'
     }
     if (blueScore > 20 && blueScore > redScore + 1) {
         winCondition = true
+        document.getElementById('winner').style.display='flex'
+        document.getElementById('winner-message').innerText='Blue Wins'
+        document.getElementById('winner-message').style.color='blue'
     }
     if (winCondition === true) return
 
@@ -242,11 +281,17 @@ function getPongin() {
         dBallX = 0
         dBallY = 0
         loseCondition = true
+        document.getElementById('ready-red').style.display='none'
+        document.getElementById('ready-blue').style.display='none'
     }
 
     if (start === true) {
     ballX += dBallX
     ballY += dBallY
+    document.getElementById('ready-red').value='READY'
+    document.getElementById('ready-red').style.color='rgb(0, 255, 0)'
+    document.getElementById('ready-blue').value='READY'
+    document.getElementById('ready-blue').style.color='rgb(0, 255, 0)'
     }
 }
 getPongin()

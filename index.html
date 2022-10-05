@@ -31,26 +31,81 @@
     #blue-score {
         text-align: right;
     }
-    .info {
-        display: flex;
-        flex-direction: column;
-
+    td {
+        color:white;
+        width:10vw
+    }
+    #info-blue {
+        position: fixed;
+        top: 30%;
+        left: 21.5%;
+    }
+    #ready-blue {
+        text-align: right;
+    }
+    #info-red {
+        position: fixed;
+        top: 30%;
+        left: 66%;
+    }
+    #ready-red {
+        text-align: left;
+    }
+    .info input {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: white;
     }
     canvas {
       border: 1px solid white;
       background-color: rgb(15, 15, 15);
     }
+    #winner {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 100vw;
+    }
+    #winner-message{
+        font-size: 50px;
+        font-weight: bold;
+        color:white;
+        text-align: center;
+        padding: 3px;
+        background-color: rgb(15, 15, 15);
+    }
+    #play-again {
+        font-size: 20px;
+        color: white;
+        background-color: rgb(15, 15, 15);
+    }
   </style>
   <body>
     <h1>Pong</h1>
     <div id="canvas-container">
-        <div class="info">
+        <div>
             <input class="score" id="blue-score" readonly></input>
         </div>
+        <div class="info" id="info-blue">
+            <input id="ready-blue" value="hold D when ready" readonly> 
+        </div>
       <canvas></canvas>
-      <div class="info">      
+      <div>      
             <input class="score" id="red-score" readonly></input>
         </div>
+        <div class="info" id="info-red">
+            <input id="ready-red" value="hold LeftArrow when ready" readonly> 
+        </div>
+    </div>
+    <div id="winner">
+        <p id="winner-message"></p>
+        <p id="play-again">press SPACE to play again</p>
     </div>
     <script src="index.js"></script>
   </body>
